@@ -29,11 +29,6 @@ else
 end
 ```
 
-| Is DST? | Exit Code | Text |
-| ------- | --------- | ---- |
-| Yes | 0 | `true` |
-| No | 1 | `false` |
-
 ### Support matrix
 
 | Arch | OS | Supported |
