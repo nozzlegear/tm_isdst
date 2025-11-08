@@ -46,15 +46,16 @@ jobs:
         arch: [x86_64, aarch64]
     runs-on: ubuntu-latest
     container:
-      image: "docker.io/library/swift:6.2@sha256:1e73c4051f095f7f1bafbece9ca7f9c67de4c870246c20bf12a06c69c52dd827"
+      image: "docker.io/library/swift:6.2.0-noble@sha256:471acf16d3ce9b270d2f15ea177b0e150bdf1595ae2acfcc4932d1a03f43c3fd"
     env:
       triple_name: ${{ matrix.arch }}-swift-linux-musl
       artifact_name: ${{ matrix.arch }}-linux-musl
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
+      # Note: the Swift SDK version must match the Swift toolchain version exactly – toolchain 6.2.1 is *not* compatible with SDK 6.2.0
       - name: "Install Swift 6.2 SDK"
-        run: "swift sdk install https://download.swift.org/swift-6.2-branch/static-sdk/swift-6.2-DEVELOPMENT-SNAPSHOT-2025-11-05-a/swift-6.2-DEVELOPMENT-SNAPSHOT-2025-11-05-a_static-linux-0.0.1.artifactbundle.tar.gz --checksum 890dfa620fd60b48ecdaaedf5c2f2d2860ed97b4af34a6b7c4fba692468e7094"
+        run: "swift sdk install https://download.swift.org/swift-6.2-release/static-sdk/swift-6.2-RELEASE/swift-6.2-RELEASE_static-linux-0.0.1.artifactbundle.tar.gz --checksum d2225840e592389ca517bbf71652f7003dbf45ac35d1e57d98b9250368769378"
 
       - name: Build for ${{ matrix.arch }}
         run: swift build --configuration release --swift-sdk "${{ env.triple_name }}"
